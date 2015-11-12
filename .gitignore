@@ -1,0 +1,11 @@
+# Generated files
+*.elc
+*-pkg.el
+*.tar
+TAGS
+doc/carldavel.texi
+doc/carldavel.info
+
+# Packages
+.cask
+elpa
