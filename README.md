@@ -2,16 +2,11 @@
 
 ## Summary
 
-Integrate external tools to manage your contacts and calendars
+Integrate external tools to manage your contacts and calendars.
 
 ## Installing
 
-You will need Emacs 24+, `make` and [Cask](https://github.com/cask/cask) to
-build the project.
-
-    cd carldavel
-    make && make install
-
+Use [melpa](http://melpa.milkbox.net).
 
 ## Contributing
 
