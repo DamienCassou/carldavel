@@ -46,7 +46,7 @@
   ;; TODO Improve the type by proposing existing commands
   :type 'function)
 
-(defcustom carldavel-contacts-server-sync-function
+(defcustom carldavel-server-sync-function
   #'carldavel-vdirsyncer-sync-server
   "Function to sync local database with server."
   :group 'carldavel
@@ -161,7 +161,7 @@ If REFRESH is not-nil, make sure to ask pycarrdav to refresh the contacts
 list.  Otherwise, use the contacts previously fetched from pycarddav."
   (interactive "P")
   (when (and (consp refresh) (eq 16 (car refresh)))
-    (carldavel-sync-from-server))
+    (funcall carldavel-server-sync-function))
   (when refresh
     (carldavel--reset-buffer))
   (helm
