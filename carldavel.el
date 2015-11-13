@@ -65,7 +65,7 @@ Executing COMMAND with ARGUMENTS should print contacts in the mutt format
 to standard output.  The mutt format looks like:
     some@email.com	Some Name
     some2@mail.com	Some Other Name"
-  (carldavel--debug-info "Executing %s %s" command arguments)
+  (carldavel--debug-info "Executing %s" (mapconcat #'identity (cons command arguments) " "))
   (with-current-buffer buffer
     (erase-buffer)
     (apply
@@ -114,7 +114,7 @@ The returned contact is of the form
 (defun carldavel-sync-from-server (command &rest arguments)
   "Use COMMAND with ARGUMENTS to sync local database with server."
   (interactive)
-  (carldavel--debug-info "Executing %s %s" command arguments)
+  (carldavel--debug-info "Executing %s" (mapconcat #'identity (cons command arguments) " "))
   (apply
    #'call-process
    command
