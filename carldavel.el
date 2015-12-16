@@ -61,23 +61,26 @@
 (defun carldavel--fill-buffer (buffer command &rest arguments)
   "Fill BUFFER with contacts from COMMAND and ARGUMENTS.
 If BUFFER already contains something, erase it before executing COMMAND.
-Executing COMMAND with ARGUMENTS should print contacts in the mutt format
-to standard output.  The mutt format looks like:
+If BUFFER is nil, use `carldavel--buffer'.  To be used with
+`carldavel--get-contact-from-line', executing COMMAND with ARGUMENTS should
+print contacts in the mutt format to standard output.  The mutt format
+looks like:
     some@email.com	Some Name
     some2@mail.com	Some Other Name"
   (carldavel--debug-info "Executing %s" (mapconcat #'identity (cons command arguments) " "))
-  (with-current-buffer buffer
-    (erase-buffer)
-    (apply
-     #'call-process
-     command
-     nil                                ; input file
-     (list buffer nil)                  ; output to buffer, discard error
-     nil                                ; don't redisplay
-     arguments)
-    ;; Remove first line as it is only informative
-    (goto-char (point-min))
-    (delete-region (point-min) (1+ (line-end-position)))))
+  (let ((buffer (or buffer (get-buffer-create carldavel--buffer))))
+    (with-current-buffer buffer
+      (erase-buffer)
+      (apply
+       #'call-process
+       command
+       nil                        ; input file
+       (list buffer nil)          ; output to buffer, discard error
+       nil                        ; don't redisplay
+       arguments)
+      ;; Remove first line as it is only informative
+      (goto-char (point-min))
+      (delete-region (point-min) (1+ (line-end-position))))))
 
 (defun carldavel-khard-fill-buffer (buffer)
   "Call `carldavel--fill-buffer' on BUFFER.  Use khard."
